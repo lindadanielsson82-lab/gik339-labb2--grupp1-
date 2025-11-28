@@ -53,6 +53,7 @@ const outputDiv = allDivElements[0]; //detta är variabeln för div-elementet so
 
 console.log('Div-elementet för utdata, alltså det första div elementet (index 0: ', outputDiv);
 
+
 //uppgift 5
 //Skapar en fördefinierad funktion
 
