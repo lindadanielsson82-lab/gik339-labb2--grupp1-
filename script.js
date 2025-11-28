@@ -2,7 +2,7 @@
 
 //Variabel 1 - Checkboxen
 //Hämtar checkbox-elementet med ID "divStyle"
-//Använder const eftersom värdet på elementet inte kommet ändras
+//Använder const eftersom referensen till elementet inte kan ändras
 //Använder document,querySelector som DOM-funktion
 
 const divStyleCheckbox = document.querySelector('#divStyle');
@@ -47,3 +47,39 @@ const allDivElements= document.getElementsByTagName('div');
 //console för att se så allt blivit hämtat
 console.log('Alla div-element: ', allDivElements);
 console.log('Antal div-element hittades: ',allDivElements.length); //Här ser vi hur många som hämtats via length
+
+const outputDiv = allDivElements[0]; //detta är variabeln för div-elementet som funktionen behöver
+//som är satt på index 0, alltså det första fältet.
+
+console.log('Div-elementet för utdata, alltså det första div elementet (index 0: ', outputDiv);
+
+//uppgift 5
+//Skapar en fördefinierad funktion
+
+//Funktionen skapas som ett funktionsuttryck och lagras i en const.
+//Funktionen används som eventlyssnare, alltså ligger på "vänt" tills en användare har skrivit i inputfältet 
+//och denna funktion skall då aktiveras. Detta genom (e) som betyder "tar emot eventobjekt".
+const handleInputEvent = (e) => {
+console.log("Avsändare (target): ", e.target); //Skriver ut avsändaren (target) i consolen. 
+//Alltså e är eventobjektet, och e.target är elementet där händelen uppstod (skrivandet i inputfältet) 
+
+const inputName = e.target.name; //handleInputEvent (funktionen) frågar avsändaren vad 
+//den har för "namn"-etikett (attributet nem i HTML-koden) och sparar det.
+
+//Vi gör en if-sats för att kontrollera om namnet på fältet är exakt "content"
+//Om JA, hämtar det nya innehållet
+//Om NEJ, gör det ingenting då det förmodeligen var det andra fältet (färgfältet) 
+//som triggade händelsen
+if (inputName === "content") {
+    const inputValue = e.target.value; //Funktionen går till avsändaren (e.target, alltså textfåältet)
+    //och frågar: "vad står i din ruta?" svaret sparas som inputValue.
+    outputDiv.innerHTML = inputValue; //Skriver ut innehållet (value) till div-elementet (outputDiv)
+    console.log("Div-innehållet: ", inputValue); //Skriver ut i consolen
+
+}
+};
+contentInput.addEventListener('input', handleInputEvent);
+//contentInput är textfältet
+//addEventListener sätter en lyssnare här
+//input lyssnar efter händelsen "användaren skriver eller ändrar text"
+//handleInputEvent är när händelen sker, alltså anropar vår funktion
