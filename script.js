@@ -1,10 +1,9 @@
-//UPPGIFT 4
+//UPPGIFT 4 - Skapa variabler
 
 //Variabel 1 - Checkboxen
 //Hämtar checkbox-elementet med ID "divStyle"
 //Använder const eftersom referensen till elementet inte kan ändras
 //Använder document,querySelector som DOM-funktion
-
 const divStyleCheckbox = document.querySelector('#divStyle');
 
 //Console för att se så allt blivit hämtat
@@ -12,75 +11,91 @@ console.log('Checkboxen: ', divStyleCheckbox);
 
 
 //Variabel 2 - Alla textfält
-//textfält för färg
-let colorInput = document.getElementById('color');
-
-//textfält för innehåll
-let contentInput = document.getElementById('content');
-
-//textfält för det tomma fältet
-let emptyInput = document.getElementById('empty');
-
-//console för att se att allt blivit hämtat
-console.log('Färgfältet: ', colorInput);
-console.log('Innehållsfältet: ', contentInput);
-console.log('Tomt fält: ', emptyInput);
+//Hämtar alla textfält via klassnamn, FieldS pga det är flera
+const textFields = document.getElementsByClassName('textfield');
+console.log('Alla textfält: ', textFields);
 
 
 //Variabel 3 - Knappen
-//Hämtar knappen via elemtet med klassen action-button
-//använder const för knappen kommer inte ändras och document,getElementByClassName()
-//Vi väljer index 0 (alltså plats 1) eftersom metoden returnerar en lista och vi har bara en knapp
-const clickButton = document.getElementsByClassName('action-button')[0];
-
-//console för att se så knappen har hämtats
-console.log('Knappelementet (via ClassName): ', clickButton);
+//Hämtar knappen via elemtet med ID clickButton
+//använder const för knappen kommer inte ändras och document,getElementById()
+const clickButton = document.getElementById('clickButton');
+console.log('Knappen: ',clickButton);
 
 
-//Vairabel 4 - Alla div element
+//Variabel 4 - Alla div element
 //hämtar ALLA <div>-element på sidan
-//Använder const och document.getElementByTagName()
+//Använder const och document.getElementById()
 //Vi använder const för alla div element hämtas som en lista, så vi vill ha dessa lagrade och att
 //man inte kan ändra på dessa.
-const allDivElements= document.getElementsByTagName('div');
-
-//console för att se så allt blivit hämtat
-console.log('Alla div-element: ', allDivElements);
-console.log('Antal div-element hittades: ',allDivElements.length); //Här ser vi hur många som hämtats via length
-
-const outputDiv = allDivElements[0]; //detta är variabeln för div-elementet som funktionen behöver
-//som är satt på index 0, alltså det första fältet.
-
-console.log('Div-elementet för utdata, alltså det första div elementet (index 0: ', outputDiv);
+const outputDiv = document.getElementById('outputDiv');
+console.log('Div-elementet för utdata: ', outputDiv);
 
 
-//uppgift 5
+//Uppgift 5 - Skapa en fördefinierad funktion
+//Här lägger vi in variabler för referens så vi kan skriva ut både färg och innehåll samtidigt.
+const colorInput = document.getElementById('color');
+const contentInput = document.getElementById('content');
+
 //Skapar en fördefinierad funktion
-
-//Funktionen skapas som ett funktionsuttryck och lagras i en const.
+//Funktionen skapas som en funktionsdeklaration
 //Funktionen används som eventlyssnare, alltså ligger på "vänt" tills en användare har skrivit i inputfältet 
 //och denna funktion skall då aktiveras. Detta genom (e) som betyder "tar emot eventobjekt".
-const handleInputEvent = (e) => {
-console.log("Avsändare (target): ", e.target); //Skriver ut avsändaren (target) i consolen. 
-//Alltså e är eventobjektet, och e.target är elementet där händelen uppstod (skrivandet i inputfältet) 
+function handleInputEvent(e) {
+    //Skriver ut avsändaren (target) i consolen. 
+    //Alltså e är eventobjektet, och e.target är elementet där händelen uppstod (skrivandet i inputfältet) 
+    console.log("Avsändare: ", e.target); 
 
-const inputName = e.target.name; //handleInputEvent (funktionen) frågar avsändaren vad 
-//den har för "namn"-etikett (attributet nem i HTML-koden) och sparar det.
+    //Hämtar värdena fårn BÅDA fälten, därav de första referenserna som vi började med
+    const colorValue = colorInput.value;
+    const contentValue = contentInput.value;
 
-//Vi gör en if-sats för att kontrollera om namnet på fältet är exakt "content"
-//Om JA, hämtar det nya innehållet
-//Om NEJ, gör det ingenting då det förmodeligen var det andra fältet (färgfältet) 
-//som triggade händelsen
-if (inputName === "content") {
-    const inputValue = e.target.value; //Funktionen går till avsändaren (e.target, alltså textfåältet)
-    //och frågar: "vad står i din ruta?" svaret sparas som inputValue.
-    outputDiv.innerHTML = inputValue; //Skriver ut innehållet (value) till div-elementet (outputDiv)
-    console.log("Div-innehållet: ", inputValue); //Skriver ut i consolen
+    //Här gör vi en snygg utskrift i den tomma rutan, med de värden som användaren har fyllt i 
+    const combinedOutput = 'Färg: ' + colorValue + ' | Innehåll: ' + contentValue;
 
+    //Här skrivs den förgående strängen ut i rutan, så den blir synlig där
+    outputDiv.innerHTML = combinedOutput;
+
+    //Utskrift till consolen med de värden som användaren fyllt i
+    console.log('Div-innehåll uppdaterat till: ' + combinedOutput);
 }
-};
-contentInput.addEventListener('input', handleInputEvent);
-//contentInput är textfältet
-//addEventListener sätter en lyssnare här
-//input lyssnar efter händelsen "användaren skriver eller ändrar text"
-//handleInputEvent är när händelen sker, alltså anropar vår funktion
+
+//Uppgift 6 - Koppla eventlyssnare
+//Kopplar eventlyssnare till textfälten
+Array.from(textFields).forEach(function(field) {
+
+    //Använder eventet 'input', handleInputEvent skickas som referens
+    field.addEventListener('input', handleInputEvent);
+
+    console.log('Eventlyssnare "input" kopplad till fält: ' + field.name);
+});
+
+//Kopplar eventlyssnare till checkboxen
+//Kopplar till eventet "change"
+divStyleCheckbox.addEventListener('change', function(e) {
+
+    //Hämtar den färg som användaren skrivit i
+    const colorValue = colorInput.value;
+
+    //Ändrar färgen på div-elementet, alltså den tomma rutan där all text hamnar
+    outputDiv.style.backgroundColor = colorValue;
+
+    //Utskrift till consolen
+    console.log("Bakgrundsfärgen ändrades till: ", colorValue);
+});
+
+//Kopplar eventlyssnare till knappen
+//Kopplar till eventet "click"
+clickButton.addEventListener('click', function(e) {
+
+    //Skriver ut till consolen, att användaren tryckt på knappen
+    console.log('Klick har utförts: ', e.target);
+
+    //Vi tar bort hela div-elementet, när användaren tryckt på knappen
+    if (outputDiv) {
+        outputDiv.remove();
+
+        //Skriver ut till consolen
+        console.log('Div-elementet borttaget.');
+    }
+});

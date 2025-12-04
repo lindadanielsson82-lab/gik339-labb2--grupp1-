@@ -34,7 +34,7 @@
         font-size: x-large;
       }
 
-      .textfield-group__input {
+      .textfield {
         flex-grow: 1;
         padding: 0.5rem;
         border: 2px solid darkblue;
@@ -53,14 +53,17 @@
        
       }
 
-      .checkbox-group__input {
+      .checkbox {
         flex-grow: 0;
         padding: 0.5rem;
         border: 2px solid darkblue;
         border-radius: 4px;
         margin-left: 1rem;
-        
+        align-self: center;
+        height: 20px;
+        width: 20px;
       }
+
       .button-area {
         text-align: right;
         padding: 0.3rem;
@@ -80,45 +83,52 @@
         border-radius: 0.5rem;
       }
 
-      .emptytextfield-group__input {
+      #outputDiv {
         width: 100%;
+        min-height: 50px;
         padding: 1rem;
         border: 2px solid darkblue;
         border-radius: 4px;
         background-color: lightsteelblue;
+        box-sizing: border-box;
       }
 
       
     </style>
   </head>
   <body>
-     <!--Här gör vi 1 div container som innehåller 3 input element där vi skapar klasser beroendes på vad vi vill att den ska göra. Antingen en textruta eller en checkbox. 
+     <!--Här gör vi en div container som innehåller 3 input element där vi skapar klasser beroendes på vad vi vill att den ska göra. Antingen en textruta eller en checkbox, eller en knapp.
      Via name specifiserar vi vad ämnet handlar om, och via type
   specificerar vi vad det ska vara för typ av ruta - en textruta eller en checkbox.-->
   <div class="container"> 
+    <h1>Labb 2 - Grupp 1</h1>
 
     <div class="textfield-group">
       <label class="textfield-group__label" for="color" >Färg: </label>
-      <input class="textfield-group__input" id="color" name="color" type="text" />
+      <input class="textfield" id="color" name="color" type="text" />
     </div>
 
     <div class="textfield-group"> 
       <label class="textfield-group__label" for="content" >Innehåll: </label>
-      <input class="textfield-group__input" id="content" name="content" type="text" />
+      <input class="textfield" id="content" name="content" type="text" />
     </div>
 
     <div class="checkbox-group"> 
       <label class="checkbox-group__label" for="divStyle" >Stil på box: </label>
-      <input class="checkbox-group__input" id="divStyle" name="divStyle" type="checkbox" />
+      <input class="checkbox" id="divStyle" name="divStyle" type="checkbox" />
     </div>
+
 <!--Här skapar vi en klickbar knapp som vi lagt i en klass för att kunna hämta den klassen i js filen för att kunna länka den vidare-->
   <div class="button-area">
-    <button id="clickButton" class="action-button">Klicka här</button>
+    <button id="clickButton" class="action-button">Ta bort</button>
   </div>
-    <div class="emptytextfield-group">
-      <input class="emptytextfield-group__input" id="empty" name="empty" type="text" />
-    </div>
+    
+<!--Här är en div för den tomma rutan, som vi kommer länka till i js filen-->
+    <div id="outputDiv"></div>
+
 </div>
-    <script src ="script.js"></script> <!--UPPGIFT 3 Här länkar vi till js filen-->
+
+<!--UPPGIFT 3 Här länkar vi till js filen-->
+    <script src ="script.js"></script> 
   </body>
 </html>
